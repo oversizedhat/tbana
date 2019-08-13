@@ -1,0 +1,184 @@
+{
+    "StatusCode": 0,
+    "Message": null,
+    "ExecutionTime": 107,
+    "ResponseData": {
+        "LatestUpdate": "2018-12-16T21:48:21",
+        "DataAge": 66,
+        "Metros": [
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "4 min",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Skarpnäck",
+                "JourneyDirection": 2,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1942,
+                "StopPointDesignation": "2",
+                "TimeTabledDateTime": "2018-12-16T21:54:00",
+                "ExpectedDateTime": "2018-12-16T21:54:00",
+                "JourneyNumber": 10893,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "11 min",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Odenplan",
+                "JourneyDirection": 1,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1941,
+                "StopPointDesignation": "1",
+                "TimeTabledDateTime": "2018-12-16T22:00:30",
+                "ExpectedDateTime": "2018-12-16T22:00:30",
+                "JourneyNumber": 11002,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "16 min",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Skarpnäck",
+                "JourneyDirection": 2,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1942,
+                "StopPointDesignation": "2",
+                "TimeTabledDateTime": "2018-12-16T22:06:00",
+                "ExpectedDateTime": "2018-12-16T22:06:00",
+                "JourneyNumber": 10894,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "26 min",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Odenplan",
+                "JourneyDirection": 1,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1941,
+                "StopPointDesignation": "1",
+                "TimeTabledDateTime": "2018-12-16T22:15:30",
+                "ExpectedDateTime": "2018-12-16T22:15:30",
+                "JourneyNumber": 11004,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "22:21",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Skarpnäck",
+                "JourneyDirection": 2,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1942,
+                "StopPointDesignation": "2",
+                "TimeTabledDateTime": "2018-12-16T22:21:00",
+                "ExpectedDateTime": "2018-12-16T22:21:00",
+                "JourneyNumber": 10895,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "22:30",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Odenplan",
+                "JourneyDirection": 1,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1941,
+                "StopPointDesignation": "1",
+                "TimeTabledDateTime": "2018-12-16T22:30:30",
+                "ExpectedDateTime": "2018-12-16T22:30:30",
+                "JourneyNumber": 11005,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "22:36",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Skarpnäck",
+                "JourneyDirection": 2,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1942,
+                "StopPointDesignation": "2",
+                "TimeTabledDateTime": "2018-12-16T22:36:00",
+                "ExpectedDateTime": "2018-12-16T22:36:00",
+                "JourneyNumber": 10896,
+                "Deviations": null
+            },
+            {
+                "GroupOfLine": "tunnelbanans gröna linje",
+                "DisplayTime": "22:45",
+                "TransportMode": "METRO",
+                "LineNumber": "17",
+                "Destination": "Odenplan",
+                "JourneyDirection": 1,
+                "StopAreaName": "Bagarmossen",
+                "StopAreaNumber": 1941,
+                "StopPointNumber": 1941,
+                "StopPointDesignation": "1",
+                "TimeTabledDateTime": "2018-12-16T22:45:30",
+                "ExpectedDateTime": "2018-12-16T22:45:30",
+                "JourneyNumber": 11006,
+                "Deviations": null
+            }
+        ],
+        "Buses": [],
+        "Trains": [],
+        "Trams": [],
+        "Ships": [],
+        "StopPointDeviations": [
+            {
+                "StopInfo": {
+                    "StopAreaNumber": 1941,
+                    "StopAreaName": "Bagarmossen",
+                    "TransportMode": "METRO",
+                    "GroupOfLine": "tunnelbanans gröna linje"
+                },
+                "Deviation": {
+                    "Text": "Hissen vid Skarpnäck är avstängd på grund av underhållsarbete. Resenärer i behov av hissen hänvisas till närliggande stationer.\n",
+                    "Consequence": null,
+                    "ImportanceLevel": 2
+                }
+            },
+            {
+                "StopInfo": {
+                    "StopAreaNumber": 1941,
+                    "StopAreaName": "Bagarmossen",
+                    "TransportMode": "METRO",
+                    "GroupOfLine": "tunnelbanans gröna linje"
+                },
+                "Deviation": {
+                    "Text": "För din säkerhet, var uppmärksam på risken för ficktjuvar. * For your safety, please be aware of pickpockets",
+                    "Consequence": null,
+                    "ImportanceLevel": 2
+                }
+            },
+            {
+                "StopInfo": {
+                    "StopAreaNumber": 1941,
+                    "StopAreaName": "Bagarmossen",
+                    "TransportMode": "METRO",
+                    "GroupOfLine": "tunnelbanans gröna linje"
+                },
+                "Deviation": {
+                    "Text": "Korta tåg. Gå mot mitten av plattformen * Short trains. Continue to the middle of the platform. ",
+                    "Consequence": null,
+                    "ImportanceLevel": 2
+                }
+            }
+        ]
+    }
+}
