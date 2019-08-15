@@ -1,0 +1,182 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "tbana application"
+
+Parameters:
+  apiGatewayStageName:
+    Type: "String"
+    AllowedPattern: "^[a-z0-9]+$"
+    Default: "production"
+
+  lambdaFunctionName:
+    Type: "String"
+    AllowedPattern: "^[a-zA-Z0-9]+[a-zA-Z0-9-]+[a-zA-Z0-9]+$"
+    Default: "tbana"
+  
+  lambdaFunctionDesc:
+    Type: "String"
+    Default: "tbana lambda service, to fetch info on upcoming trains"
+
+  apiGatewayName:
+    Type: "String"
+    AllowedPattern: "^[a-zA-Z0-9]+[a-zA-Z0-9-]+[a-zA-Z0-9]+$"
+    Default: "tbanaApi"
+  
+  apiGatewayDesc:
+    Type: "String"
+    Default: "Api gateway for my tbana lambda function"
+
+  dbBucketName:
+    Type: "String"
+    AllowedPattern: "^[a-zA-Z0-9]+[a-zA-Z0-9-]+[a-zA-Z0-9]+$"
+    Default: "tbana-database"
+
+Resources:
+  dbBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Ref "dbBucketName"
+      PublicAccessBlockConfiguration: 
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+    DeletionPolicy: "Delete"
+
+  apiGateway:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: !Ref "apiGatewayName"
+      Description: !Ref "apiGatewayDesc"
+
+  apiGatewayPostMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      AuthorizationType: "NONE"
+      HttpMethod: "POST"
+      Integration:
+        IntegrationHttpMethod: "POST"
+        Type: "AWS_PROXY"
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - lambdaArn: !GetAtt "lambdaFunction.Arn"
+      ResourceId: !GetAtt "apiGateway.RootResourceId"
+      RestApiId: !Ref "apiGateway"
+
+  apiGatewayGetMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      AuthorizationType: "NONE"
+      HttpMethod: "GET"
+      Integration:
+        IntegrationHttpMethod: "POST"
+        Type: "AWS_PROXY"
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - lambdaArn: !GetAtt "lambdaFunction.Arn"
+      ResourceId: !GetAtt "apiGateway.RootResourceId"
+      RestApiId: !Ref "apiGateway"
+
+  apiGatewayDeployment:
+    Type: "AWS::ApiGateway::Deployment"
+    DependsOn:
+      - "apiGatewayPostMethod"
+      - "apiGatewayGetMethod"
+    Properties:
+      RestApiId: !Ref "apiGateway"
+      StageName: !Ref "apiGatewayStageName"
+
+  lambdaFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Code:
+        ZipFile: |
+          async function handler(event) {
+              const response = {
+                statusCode: 200,
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                body: "Hello " + event.requestContext.identity.sourceIp + "! You need to replace me with the real function..."
+              }
+              return response;
+          }
+          module.exports = {
+              handler: handler
+          }
+      Description: !Ref "lambdaFunctionDesc"
+      FunctionName: !Ref "lambdaFunctionName"
+      Handler: "index.handler"
+      MemorySize: 128
+      Role: !GetAtt "lambdaIAMRole.Arn"
+      Runtime: "nodejs8.10"
+      Timeout: 10
+
+  lambdaApiGatewayInvoke:
+    Type: "AWS::Lambda::Permission"
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !GetAtt "lambdaFunction.Arn"
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${apiGateway}/*/*/"
+
+  lambdaIAMRole:
+    Type: "AWS::IAM::Role"
+    DependsOn:
+      - "dbBucket"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action:
+              - "sts:AssumeRole"
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+      Policies:
+        -
+          PolicyName: !Sub "${lambdaFunctionName}LambdaRole"
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                    "Action": [
+                        "s3:ListAllMyBuckets",
+                        "s3:GetBucketLocation"
+                    ],
+                    "Effect": "Allow",
+                    "Resource": "*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": "s3:*",
+                    "Resource": [
+                        !Sub "arn:aws:s3:::${dbBucketName}",
+                        !Sub "arn:aws:s3:::${dbBucketName}/*"
+                    ]
+                  },
+                  {
+                    "Action": [
+                          "logs:CreateLogGroup",
+                          "logs:CreateLogStream",
+                          "logs:PutLogEvents"
+                      ],
+                      "Effect": "Allow",
+                      "Resource": !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${lambdaFunctionName}:*"
+                  }
+              ]
+            }
+
+  lambdaLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${lambdaFunctionName}"
+      RetentionInDays: 90
+      
+Outputs:
+  apiGatewayInvokeURL:
+    Value: !Sub "https://${apiGateway}.execute-api.${AWS::Region}.amazonaws.com/${apiGatewayStageName}"
+
+  lambdaArn:
+    Value: !GetAtt "lambdaFunction.Arn"
