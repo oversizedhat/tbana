@@ -1,1 +1,4 @@
 db.json
+.npmrc
+node_modules
+.vscode

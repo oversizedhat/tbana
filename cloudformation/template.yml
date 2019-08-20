@@ -29,6 +29,10 @@ Parameters:
     Type: "String"
     AllowedPattern: "^[a-zA-Z0-9]+[a-zA-Z0-9-]+[a-zA-Z0-9]+$"
     Default: "tbana-database"
+  
+  trafiklabApiKey:
+    Type: "String"
+    Default: ""
 
 Resources:
   dbBucket:
@@ -110,6 +114,8 @@ Resources:
       Role: !GetAtt "lambdaIAMRole.Arn"
       Runtime: "nodejs8.10"
       Timeout: 10
+      Variables:
+        TRAFIKLAB_API_KEY: !Ref trafiklabApiKey
 
   lambdaApiGatewayInvoke:
     Type: "AWS::Lambda::Permission"

@@ -1,15 +1,17 @@
 {
-    "name": "tbana",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "oversizedhat <oscar@oscarberg.com>",
-    "license": "MIT",
-    "dependencies": {
-    }
-  }
-  
+  "name": "tbana",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dev.js",
+    "test": "mocha"
+  },
+  "author": "oversizedhat <oscar@oscarberg.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "~2.512.0",
+    "mocha": "~6.2.0"
+  },
+  "private": true
+}
