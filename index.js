@@ -8,22 +8,37 @@ const JOURNEY_DIRECTION_NORTH = 1; //from bagarmossen towards sthlm central that
 const S3_BUCKET = "tbana-db";
 const TRAFIKLAB_API_KEY = process.env.TRAFIKLAB_API_KEY;
 
+const allowedOrigins = ["http://localhost:8080","http://www.coommuter.com"];
+
 //lambda handler
-async function handler(event) {    
+async function handler(event) { 
+    const origin = event.headers && event.headers.origin;
+    if (!origin || !allowedOrigins.includes(origin)){
+        return {
+          statusCode: 403,
+          headers: {
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": allowedOrigins[0]
+          }
+        }
+    }
+    
+    const siteId = (event.queryStringParameters && event.queryStringParameters.siteId)?event.queryStringParameters.siteId:DEFAULT_SITE_ID;
+    const dir = (event.queryStringParameters && event.queryStringParameters.dir)?event.queryStringParameters.dir:JOURNEY_DIRECTION_NORTH;
+
     //fetch train info from trafiklab 
-    const bagisToCityTrains = (await fetchRealtimeDepatures()).Metros.filter((train) => {
-        return train.JourneyDirection == JOURNEY_DIRECTION_NORTH
+    const trains = (await fetchRealtimeDepatures(siteId)).Metros.filter((train) => {
+        return train.JourneyDirection == dir
     });
   
-    //Note CORS is enabled for now. 
-    //TODO dont allow *
+    //Note CORS reply with same origin
     const response = {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": origin
       },
-      body: JSON.stringify(bagisToCityTrains)
+      body: JSON.stringify(trains)
     }
     return response;
 }
