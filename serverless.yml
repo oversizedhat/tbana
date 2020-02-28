@@ -1,0 +1,37 @@
+# serverless.yml
+service: tbana
+
+provider:
+  name: aws
+  region: eu-north-1
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  memorySize: 128 # optional, in MB, default is 1024
+  timeout: 15 # optional, in seconds, default is 6
+  versionFunctions: false # optional, default is true
+  tracing:
+    lambda: false # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
+
+functions:
+  tbana-getDepartures:
+    handler: index.handler # required, handler set in AWS Lambda
+    name: tbana-getDepartures-${self:provider.stage} # optional, Deployed Lambda name
+    description: Get realtime departures given site and direction # optional, Description to publish to AWS
+    environment: 
+      TRAFIKLAB_API_KEY: ${env:TRAFIKLAB_API_KEY}
+    events:
+      - http: 
+          method: get
+          path: trains/departures
+          cors: true
+
+custom:
+  stage: "${opt:stage, self:provider.stage}"
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:service}-${self:custom.stage}
+        Description: Get realtime departures given site and direction

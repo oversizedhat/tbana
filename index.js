@@ -46,7 +46,7 @@ const allowedOrigins = ["http://localhost:8080","http://www.coommuter.com"];
  * TODO validate that the requested siteid exists
  */
 
-async function lambdaHandler(event) { 
+async function getDepartures(event) { 
     const origin = event.headers && event.headers.origin;
     if (!origin || !allowedOrigins.includes(origin)) {
         return {
@@ -61,7 +61,7 @@ async function lambdaHandler(event) {
     const siteId = (event.queryStringParameters && event.queryStringParameters.siteId)?event.queryStringParameters.siteId:undefined;
     const dir = (event.queryStringParameters && event.queryStringParameters.dir)?event.queryStringParameters.dir:undefined;
 
-    // Prep response, note CORS reply with same origin
+    // Prep response, note CORS reply with same origin as orgin was accepted
     const response = {
         headers: {
           'Content-Type': 'application/json',
@@ -134,5 +134,5 @@ async function fetchRealtimeDepatures(siteId = DEFAULT_SITE_ID, timeWindow = 60,
 }
 
 module.exports = {
-    handler: lambdaHandler
+    handler: getDepartures
 }
