@@ -5,8 +5,10 @@ Trafiklab proxy service for stockholm subway queries using serverless setting up
 Install:
 ```
 # Have an aws account and AWS CLI setup
-# Istall nodejs > v8
+# Install nodejs > v8
 # Install serverless globally
+# Setup a trafiklab.se account and export env var TRAFIKLAB_API_KEY with your api token for SL Realtidsinformation 4
+
 $ npm install -g serverless
 $ npm install
 ```
@@ -17,7 +19,7 @@ $ npm test
 Local dev
 ```
 $ npm start
-# ......Starting serveless in offline mode..
+......starting serveless in offline mode
 ```
 Deploy
 ```
