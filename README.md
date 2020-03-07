@@ -1,9 +1,29 @@
 # tbana
 
-### TODO'S
-- Local develop/test setup
-- webpack with exludes of already in lambda libs
-- easy deploy script updates to lambda
-- cloudformation, + create db bucket and give lamda access to it
-- support for fetching data as both web page and json service
+Trafiklab proxy service for stockholm subway queries using serverless setting up Lambda function and API gateway rest api.
 
+Install:
+```
+# Have an aws account and AWS CLI setup
+# Istall nodejs > v8
+# Install serverless globally
+$ npm install -g serverless
+$ npm install
+```
+Test
+```
+$ npm test
+```
+Local dev
+```
+$ npm start
+# ......Starting serveless in offline mode..
+```
+Deploy
+```
+# deploy stage
+$ npm run deploy:dev
+
+# deploy prod (hardcoded to v1)
+$ npm run deploy:prod
+```
