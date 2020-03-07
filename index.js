@@ -1,5 +1,6 @@
 'use strict'
 const http = require('http');
+const caseless = require('caseless');
 
 const TRAFIKLAB_API_ENDPOINT = "http://api.sl.se/api2/realtimedeparturesV4.json";
 const DEFAULT_SITE_ID = 9141; //bagarmossen
@@ -47,7 +48,8 @@ const allowedOrigins = ["http://localhost:8080","http://www.coommuter.com"];
  */
 
 async function getDepartures(event) { 
-    const origin = event.headers && event.headers.origin;
+    const headers = caseless(event.headers);
+    const origin = headers && headers.get('origin');
     if (!origin || !allowedOrigins.includes(origin)) {
         return {
             statusCode: 403,
@@ -108,7 +110,7 @@ async function getDepartures(event) {
 }
 
 // Fetch data using trafiklab service
-async function fetchRealtimeDepatures(siteId = DEFAULT_SITE_ID, timeWindow = 60, bus = false) {
+async function fetchRealtimeDepatures(siteId = DEFAULT_SITE_ID, timeWindow = 60 /*max allowed*/, bus = false) {
     return new Promise((resolve, reject) => {
         const url = `${TRAFIKLAB_API_ENDPOINT}?key=${TRAFIKLAB_API_KEY}&siteid=${siteId}&timewindow=${timeWindow}&Bus=${bus}`;
         console.log(`get ${url}`);
@@ -119,7 +121,8 @@ async function fetchRealtimeDepatures(siteId = DEFAULT_SITE_ID, timeWindow = 60,
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
-                    if (!parsedData.ResponseData) {
+                    if (!parsedData.ResponseData || parsedData.StatusCode != 0 ) {
+                        console.error("Trafiklab request failed:", parsedData);
                         reject(new Error(`Trafiklab request failed with ${parsedData.StatusCode} - ${parsedData.Message}`));
                     } else {
                         resolve(parsedData.ResponseData);

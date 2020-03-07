@@ -12,6 +12,9 @@ provider:
   tracing:
     lambda: false # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
 
+plugins:
+  - serverless-offline
+
 functions:
   tbana-getDepartures:
     handler: index.handler # required, handler set in AWS Lambda
