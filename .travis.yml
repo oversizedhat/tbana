@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 14
+
+jobs:
+  include:
+    - stage: "deploy"
+      before_script:
+        - npm install -g serverless
+        - npm test
+      script:
+        - npm run deploy:dev
