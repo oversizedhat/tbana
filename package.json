@@ -7,7 +7,9 @@
     "start": "serverless offline",
     "test": "mocha",
     "deploy:dev": "serverless deploy",
-    "deploy:prod": "serverless deploy --stage v1"
+    "deploy:prod": "serverless deploy --stage v1",
+    "lint:travis": "docker run -v $(pwd):/project --rm traviscli lint -x",
+    "pre-commit": "npm run lint:travis && npm run test"
   },
   "author": "oversizedhat <oscar@oscarberg.com>",
   "license": "MIT",
@@ -17,5 +19,13 @@
     "mocha": "~6.2.0",
     "serverless-offline": "~5.12.1"
   },
-  "private": true
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
+  },
+  "private": true,
+  "devDependencies": {
+    "husky": "~4.3.0"
+  }
 }

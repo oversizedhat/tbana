@@ -2,11 +2,13 @@ language: node_js
 node_js:
   - 14
 
+before_install: 
+  - npm install -g serverless
+before_script:
+  - npm test
+
 jobs:
   include:
-    - stage: "deploy"
-      before_script:
-        - npm install -g serverless
-        - npm test
+    - stage: "dev"
       script:
         - npm run deploy:dev
