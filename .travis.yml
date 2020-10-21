@@ -7,8 +7,17 @@ before_install:
 before_script:
   - npm test
 
+stages:
+  - stage
+  - prod
+
 jobs:
   include:
-    - stage: "dev"
+    - stage: stage
+      if: branch = "stage"
       script:
         - npm run deploy:dev
+    - stage: prod
+      if: branch = "master"
+      script:
+        - npm run deploy:prod
