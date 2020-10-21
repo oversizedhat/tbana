@@ -35,8 +35,9 @@ $ npm run deploy:prod
 Travis ci is used to deploy the serverless project to AWS.
 
 Branch rules: 
-- master branch: production
-- stage branch: dev
+- master -> v1 (production)
+- stage -> dev
+- any other branch -> runs test and serverless dry run
 
 Connect github repo with Travis, and create neccessary env vars in Travis project allowing deploys to AWS S3
 ```
