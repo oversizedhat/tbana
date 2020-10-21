@@ -1,6 +1,8 @@
 # serverless.yml
 service: tbana
 
+configValidationMode: error
+
 provider:
   name: aws
   region: eu-north-1
