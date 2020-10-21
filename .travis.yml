@@ -4,15 +4,15 @@ node_js:
 
 before_install: 
   - npm install -g serverless
-before_script:
-  - npm test
 
 stages:
+  - test
   - stage
   - prod
 
 jobs:
   include:
+    - stage: test # runs default script, which is npm test
     - stage: stage
       if: branch = "stage"
       script:
