@@ -7,12 +7,16 @@ before_install:
 
 stages:
   - test
+  - dryrun
   - stage
   - prod
 
 jobs:
   include:
     - stage: test # runs default script, which is npm test
+    - stage: dryrun 
+      if: branch NOT IN (master, stage)
+      script: serverless deploy --noDeploy
     - stage: stage
       if: branch = "stage"
       script:
