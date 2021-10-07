@@ -1,5 +1,5 @@
 # tbana
-[![Build Status](https://travis-ci.org/oversizedhat/tbana.svg?branch=master)](https://travis-ci.org/oversizedhat/tbana)
+[![Build Status](https://travis-ci.com/oversizedhat/tbana.svg?branch=master)](https://travis-ci.com/oversizedhat/tbana)
 
 Trafiklab proxy service for stockholm subway queries using serverless framework setting up Lambda function and API gateway rest api.
 
